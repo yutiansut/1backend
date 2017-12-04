@@ -71,6 +71,7 @@ export interface User {
   AvatarLink: string;
   Premium?: boolean;
   Tokens?: Token[];
+  Posts?: Post[];
 }
 
 export interface AccessToken {
@@ -123,7 +124,7 @@ export interface Token {
   Enabled?: boolean;
   Quota?: number;
 }
-export interface Posts {
+export interface Post {
   Id?: string;
   Title?: string;
   Subtitle?: string;

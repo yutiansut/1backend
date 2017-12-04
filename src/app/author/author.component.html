@@ -32,21 +32,30 @@
 
   </div>
   <div fxFlex.lt-md="1 1 100%" fxFlex="1 1 75%" ngClass.gt-sm="project-list" style="margin-bottom: 1em; padding-top: 0em">
-    <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+    <mat-tab-group class="tab-group" [(selectedIndex)]="selectedIndex" #tabGroup (selectedIndexChange)="selectedIndexChange(tabGroup)">
 
-      <mat-tab label="Projects">
+      <mat-tab [attr.data-pid]="'projects'">
+          <ng-template mat-tab-label>
+              Projects
+            </ng-template>
         <mat-card style="margin-top: 2em">
           <app-project-list [projects]="projects"></app-project-list>
         </mat-card>
       </mat-tab>
 
-      <mat-tab *ngIf="false" label="Blog">
+      <mat-tab [attr.data-pid]="'blog'">
+          <ng-template mat-tab-label>
+              Blog
+            </ng-template>
         <mat-card style="margin-top: 2em; padding-bottom: 1em;">
           <app-posts [author]="author"></app-posts>
         </mat-card>
       </mat-tab>
 
-      <mat-tab *ngIf="author === us.user.Nick" label="Tokens">
+      <mat-tab *ngIf="author === us.user.Nick" [attr.data-pid]="'tokens'">
+          <ng-template mat-tab-label>
+              Tokens
+            </ng-template>
         <!-- workaround for bug https://github.com/angular/material2/issues/5269 -->
         <div style="margin-top: 2em; padding-bottom: 1em;" *ngIf="selectedTabIndex == 1">
           <!-- Blog removed for a while -->

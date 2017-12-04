@@ -76,6 +76,10 @@ import { TokenService } from './token.service';
 import { ProjectService } from './project.service';
 import { ProjectStatusComponent } from './projects/project/code/project-status/project-status.component';
 import { StarButtonComponent } from './projects/star-button/star-button.component';
+import { CreatePostComponent } from './author/posts/create-post/create-post.component';
+import { CreatePostDialogService } from './author/posts/create-post-dialog.service';
+import { PostService } from './post.service';
+import { PostComponent } from './author/posts/post/post.component';
 
 const appRoutes: Routes = [
   {
@@ -144,7 +148,9 @@ const appRoutes: Routes = [
     TokensComponent,
     ProfileEditComponent,
     ProjectStatusComponent,
-    StarButtonComponent
+    StarButtonComponent,
+    CreatePostComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
@@ -189,14 +195,17 @@ const appRoutes: Routes = [
     CreateIssueDialogService,
     ChargeService,
     ProjectService,
-    TokenService
+    TokenService,
+    CreatePostDialogService,
+    PostService
   ],
   bootstrap: [AppComponent],
   entryComponents: [
     CreateProjectComponent,
     CreateProjectDialogComponent,
     CreateIssueComponent,
-    LoginComponent
+    LoginComponent,
+    CreatePostComponent
   ]
 })
 export class AppModule {}
