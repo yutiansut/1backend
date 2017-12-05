@@ -6,6 +6,8 @@ import { SessionService } from '../../session.service';
 import { CreatePostDialogService } from '../posts/create-post-dialog.service';
 import { HttpClient } from '@angular/common/http';
 import { PostService } from '../../post.service';
+import { environment } from '../../../environments/environment';
+
 
 @Component({
   selector: 'app-posts',
@@ -14,11 +16,11 @@ import { PostService } from '../../post.service';
   encapsulation: ViewEncapsulation.None
 })
 export class PostsComponent implements OnInit {
-  @Input () refresh: () => void;
-  @Input () author: string;
+  @Input() author: string;
   posts: types.Post[] = [];
   postId = '';
   search = '';
+  link = environment.backendUrl;
 
   constructor(
     public us: UserService,
@@ -26,22 +28,26 @@ export class PostsComponent implements OnInit {
     private route: ActivatedRoute,
     private ss: SessionService,
     private cpds: CreatePostDialogService,
-    private ps: PostService
-  ) {
-   }
+    private ps: PostService,
 
-   getPosts() {
-    this.ps.list(this.author)
-    .then(posts => (this.posts))
-    .catch(err => (console.log('error')));
-   }
+  ) {}
 
-   create () {
-    this.cpds.openDialog(this.author, () => this.getPosts());
+  getPosts() {
+    this.ps
+      .list(this.author)
+      .then(posts => {
+        this.posts = posts;
+      })
+      .catch(err => console.log('error'));
+  }
+
+  create() {
+    this.cpds.openDialog(this.author, () => {
+      this.getPosts();
+    });
   }
 
   ngOnInit() {
     this.getPosts();
   }
-
 }

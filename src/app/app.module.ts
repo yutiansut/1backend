@@ -95,6 +95,10 @@ const appRoutes: Routes = [
     component: ProjectsComponent
   },
   {
+    path: ':author/p/:postId',
+    component: PostComponent
+  },
+  {
     path: ':author/:project/issue/:issueId',
     component: ProjectComponent
   },

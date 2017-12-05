@@ -1,26 +1,26 @@
 <div fxLayout="row wrap" fxLayoutAlign="space-between">
   <div fxFlex="1 1 100%">
     <mat-form-field style="width: 100%; padding-bottom: 1em;" color="primary">
-      <input matInput [(ngModel)]="search" placeholder="Search projects" />
+      <input matInput [(ngModel)]="search" placeholder="Search posts" />
     </mat-form-field>
   </div>
-  <span *ngIf="author === us.user.Nick" align="end" style="margin-left: -100px; margin-top: -3px;" matTooltip="Create new project"
+  <span *ngIf="author === us.user.Nick" align="end" style="margin-left: -100px; margin-top: -3px;" matTooltip="Create new post"
     matTooltipPosition="above">
     <button mat-mini-fab (click)="create()" color="accent">
       <mat-icon>add</mat-icon>
     </button>
   </span>
 </div>
-<div fxLayout="column">
+<div fxLayout="column" *ngFor="let p of posts | FilterPipe: search">
   <div style="margin-top: 2em">
-    <mat-card *ngFor="let p of posts" fxFlex="1 1 100%" style="width: 100%;">
-      <mat-card-title>
-        {{p.Title}}
-      </mat-card-title>
-      <mat-card-subtitle>
-        {{p.UpdatedAt | amTimeAgo}} by {{p.User}}
-      </mat-card-subtitle>
-    </mat-card>
+    <div fxFlex="1 1 100%" style="width: 100%;">
+      <div style="padding-bottom: 1em">
+        <h2><a href="/{{author}}/p/{{p.Id}}">{{p.Title}}</a></h2>
+      </div>
+      <div style="padding-bottom: 1em; border-bottom: solid 1px">
+        {{p.UpdatedAt | amTimeAgo}} by {{p?.User.Nick}}
+      </div>
+    </div>
   </div>
   <div *ngIf="posts.length < 1">
     There are no blog posts yet.
