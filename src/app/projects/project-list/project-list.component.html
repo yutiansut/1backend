@@ -1,6 +1,6 @@
 <div fxLayout="row wrap" fxLayoutAlign="space-between">
   <div fxFlex="1 1 100%">
-    <mat-form-field style="width: 100%; padding-bottom: 1em;" color="primary">
+    <mat-form-field style="width: 100%; padding-bottom: 0.5em;" color="primary">
       <input matInput [(ngModel)]="search" placeholder="Search projects" />
     </mat-form-field>
   </div>
@@ -11,6 +11,13 @@
     </button>
   </span>
 </div>
+<button *ngIf="!sortedByStars && !sortedByUpdatedAt" mat-raised-button [matMenuTriggerFor]="menu">Sort by</button>
+<button *ngIf="sortedByStars" mat-raised-button [matMenuTriggerFor]="menu">Stars</button>
+<button *ngIf="sortedByUpdatedAt && !sortedByStars" mat-raised-button [matMenuTriggerFor]="menu">Updated at</button>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="sortByStars()">Stars</button>
+  <button mat-menu-item (click)="sortByUpdatedAt()">Updated at</button>
+</mat-menu>
 <div>
   <div *ngFor="let p of projects | FilterPipe: search | slice:this.currentPage * 10:(this.currentPage + 1) * 10" style="margin-top: 1em; margin-bottom: 2em; border-bottom: 1px solid #c5c5c5; padding-bottom: 1em; font-family: 'Roboto Light';">
     <div fxLayout="row">

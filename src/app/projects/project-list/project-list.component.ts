@@ -20,6 +20,8 @@ export class ProjectListComponent implements OnInit {
   currentPage = 0;
   author = '';
   isProjectsPage = false;
+  sortedByStars = false;
+  sortedByUpdatedAt = false;
 
   constructor(
     private cp: CreateProjectDialogService,
@@ -63,6 +65,10 @@ export class ProjectListComponent implements OnInit {
     this.currentPage = $event.pageIndex;
   }
 
+  firstPage($event: any) {
+    $event.pageIndex = 0;
+  }
+
   star(p: types.Project) {
     this.ps
       .star(p.Id)
@@ -83,5 +89,40 @@ export class ProjectListComponent implements OnInit {
         proj.Starrers = null;
       })
       .catch(error => {});
+  }
+
+  sortByStars() {
+    this.ps.list().then(projs => {
+      projs = this.projects.sort((a, b) => {
+        if (a.Stars === b.Stars) {
+          return 0;
+        }
+        if (a.Stars < b.Stars) {
+          return 1;
+        }
+        if (a.Stars > b.Stars) {
+          return -1;
+        }
+      });
+      return projs;
+    });
+    this.sortedByStars = true;
+  }
+
+  sortByUpdatedAt() {
+    this.ps.list().then(projs => {
+      projs = this.projects.sort((a, b) => {
+        if (a.UpdatedAt === b.UpdatedAt) {
+          return 0;
+        }
+        if (a.UpdatedAt < b.UpdatedAt) {
+          return 1;
+        }
+        return -1;
+      });
+      return projs;
+    });
+    this.sortedByUpdatedAt = true;
+    this.sortedByStars = false;
   }
 }
